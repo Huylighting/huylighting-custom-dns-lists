@@ -1,0 +1,10 @@
+! ==========================================
+! Huylighting Custom Allowlist
+! Personal AdGuard Home Allowlist
+! ==========================================
+
+! MA Lighting - Stage Lighting
+@@||malighting.com^
+
+! Azota - Education
+@@||azota.vn^
