@@ -1,7 +1,18 @@
-! ==========================================
+! ==================================================
 ! Huylighting Custom Allowlist
-! Personal AdGuard Home Allowlist
-! ==========================================
+! Universal ABP-Compatible DNS / Content Blocker Rules
+!
+! Compatible with:
+! - AdGuard Home
+! - Pi-hole v6+ (subscribed allowlist)
+! - uBlock Origin and other blockers supporting ABP rules
+!
+! Note:
+! - This file uses ABP network-filter syntax (@@||domain^).
+! - It is NOT a universal plain-domain list for every DNS blocker.
+! - Pi-hole v5 and products without ABP support require a
+!   separate plain-domain import or manual domain entries.
+! ==================================================
 
 ! MA Lighting - Stage Lighting
 @@||malighting.com^
