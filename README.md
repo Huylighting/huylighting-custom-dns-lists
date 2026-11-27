@@ -19,7 +19,7 @@ Use the matching URL for the matching filter type. **Do not add the allowlist UR
 ### Allowlist
 
 ```text
-https://raw.githubusercontent.com/Huylighting/huylighting-custom-allowlist/main/allowlists.txt
+https://raw.githubusercontent.com/Huylighting/huylighting-custom-dns-lists/main/allowlists.txt
 ```
 
 - AdGuard Home: **Filters → DNS allowlists → Add allowlist**
@@ -29,14 +29,14 @@ https://raw.githubusercontent.com/Huylighting/huylighting-custom-allowlist/main/
 ### Blocklist
 
 ```text
-https://raw.githubusercontent.com/Huylighting/huylighting-custom-allowlist/main/blocklists.txt
+https://raw.githubusercontent.com/Huylighting/huylighting-custom-dns-lists/main/blocklists.txt
 ```
 
 - AdGuard Home: **Filters → DNS blocklists → Add blocklist**
 - Pi-hole v6+: add as a subscribed blocklist only if your installed version supports the rule format.
 - Other products: use only if they support ABP-style network filter rules.
 
-The blocklist currently contains comments only; **there are no active block rules yet**. Add it as a subscription after active rules have been reviewed and published.
+The custom blocklist currently includes the verified Spotify advertising endpoint `aet.spotify.com`. It is intentionally kept separate from Spotify image/CDN domains to avoid breaking cover art unnecessarily.
 
 ## Current allowlist entries
 
@@ -94,6 +94,30 @@ Always check the official documentation for the exact product and version before
 
 A rule in either list changes filtering behavior for the matching domain. Review changes before subscribing in a production network.
 
+
+## Previously configured upstream blocklist sources
+
+The following third-party filter families/lists have appeared in the user's DNS-filtering setup. They are **upstream subscriptions**, not individual rules maintained in this repository, and their contents are not copied into `blocklists.txt`:
+
+- StevenBlack
+- BigDargon hostsVN (multiple variants)
+- sysctl Cameleon
+- Disconnect tracking/ad list
+- DeveloperDan AMP
+- EasyList and EasyPrivacy
+- AdGuard DNS
+- NoCoin
+- anudeepND adservers
+- Firebog AdGuardDNS
+- OISD Big / Small
+- 1Hosts Lite / Xtra
+- HaGeZi Normal / Pro / Pro++ / Ultimate and Threat Intelligence Feeds (TIF)
+- AWAvenue, ABPVN, AdGuard tracking/popup filters
+- URLHaus, PhishTank and OpenPhish threat feeds
+- Device-tracker, smart-TV/game-console, gambling and anti-piracy filters
+
+The exact enabled set has differed between AdGuard Home and Pi-hole and may change over time. Keep managing these subscriptions in each DNS product rather than copying their full contents into this small custom list.
+
 ## Reporting an issue
 
 When reporting a false positive or suggesting a block rule, include:
@@ -129,7 +153,7 @@ Phải dùng đúng URL theo loại bộ lọc. **Không thêm Allowlist vào m�
 ### Allowlist
 
 ```text
-https://raw.githubusercontent.com/Huylighting/huylighting-custom-allowlist/main/allowlists.txt
+https://raw.githubusercontent.com/Huylighting/huylighting-custom-dns-lists/main/allowlists.txt
 ```
 
 - AdGuard Home: **Filters → DNS allowlists → Add allowlist**
@@ -139,14 +163,14 @@ https://raw.githubusercontent.com/Huylighting/huylighting-custom-allowlist/main/
 ### Blocklist
 
 ```text
-https://raw.githubusercontent.com/Huylighting/huylighting-custom-allowlist/main/blocklists.txt
+https://raw.githubusercontent.com/Huylighting/huylighting-custom-dns-lists/main/blocklists.txt
 ```
 
 - AdGuard Home: **Filters → DNS blocklists → Add blocklist**
 - Pi-hole v6+: chỉ đăng ký dưới dạng subscribed blocklist nếu phiên bản đang dùng hỗ trợ cú pháp này.
 - Nền tảng khác: chỉ sử dụng nếu hỗ trợ quy tắc mạng kiểu ABP.
 
-Hiện tại `blocklists.txt` mới có phần tiêu đề và chú thích, **chưa có quy tắc chặn đang hoạt động**. Chỉ nên đăng ký sau khi đã bổ sung và kiểm tra các quy tắc thực tế.
+Blocklist tùy chỉnh hiện có quy tắc chặn endpoint quảng cáo Spotify `aet.spotify.com`. Quy tắc này được tách biệt với các tên miền CDN/hình ảnh Spotify để hạn chế ảnh hưởng đến ảnh bìa.
 
 ## Các tên miền hiện được cho phép
 
@@ -199,6 +223,30 @@ Hãy kiểm tra tài liệu chính thức của đúng sản phẩm và phiên b
 - Xem xét báo cáo lỗi và loại bỏ quy tắc không còn phù hợp.
 
 Mỗi quy tắc đều làm thay đổi hành vi lọc đối với tên miền tương ứng. Hãy kiểm tra thay đổi trước khi sử dụng trên mạng đang hoạt động.
+
+
+## Các nguồn Blocklist bên thứ ba đã từng cấu hình
+
+Các bộ lọc/danh sách bên thứ ba sau đã xuất hiện trong cấu hình lọc DNS của người dùng. Đây là **nguồn đăng ký bên ngoài**, không phải từng quy tắc do repository này tự duy trì; nội dung của chúng không được sao chép vào `blocklists.txt`:
+
+- StevenBlack
+- BigDargon hostsVN (nhiều biến thể)
+- sysctl Cameleon
+- Disconnect tracking/ad
+- DeveloperDan AMP
+- EasyList và EasyPrivacy
+- AdGuard DNS
+- NoCoin
+- anudeepND adservers
+- Firebog AdGuardDNS
+- OISD Big / Small
+- 1Hosts Lite / Xtra
+- HaGeZi Normal / Pro / Pro++ / Ultimate và Threat Intelligence Feeds (TIF)
+- AWAvenue, ABPVN, bộ lọc tracking/popup của AdGuard
+- URLHaus, PhishTank và OpenPhish
+- Các bộ lọc device-tracker, smart-TV/game-console, gambling và anti-piracy
+
+Tập nguồn được bật chính xác từng thời điểm có khác nhau giữa AdGuard Home và Pi-hole và có thể thay đổi. Hãy tiếp tục quản lý các subscription này trực tiếp trong từng sản phẩm DNS, không sao chép toàn bộ nội dung của chúng vào danh sách tùy chỉnh nhỏ này.
 
 ## Báo cáo và đề xuất
 
