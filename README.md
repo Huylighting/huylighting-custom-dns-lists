@@ -1,179 +1,213 @@
-# Huylighting — Custom Allowlist for DNS & Ad Blocking
+# Huylighting — Custom DNS Lists
 
-A transparent, community-readable allowlist for legitimate websites and services that may be incorrectly blocked by filters. The project provides compatible rule files for multiple filtering platforms instead of assuming one syntax works everywhere.
+A personally maintained collection of **DNS allowlists and blocklists** for legitimate false-positive fixes and carefully selected custom blocking rules.
 
-The list is maintained by Huylighting. Every exception should have a clear purpose and be reviewed before it is added.
+The project keeps allow and block rules in separate subscription files. This prevents a rule intended to allow a service from being mixed into a blocking feed, or vice versa.
 
-## Supported formats
+## Repository contents
 
-| File | Format | Intended platforms |
+| File | Purpose | Rule syntax |
 | --- | --- | --- |
-| [allowlists.txt](./allowlists.txt) | AdGuard / Adblock Plus (ABP) filter syntax | AdGuard Home, Pi-hole v6+ subscribed allowlists, uBlock Origin and other blockers that accept compatible ABP network filters |
+| [allowlists.txt](./allowlists.txt) | Allow legitimate services that may be blocked by mistake | `@@||domain.tld^` |
+| [blocklists.txt](./blocklists.txt) | Block selected domains | `||domain.tld^` |
+| [README.md](./README.md) | Usage and maintenance documentation | — |
 
-**Compatibility note:** Not every ad blocker uses the same rule format or supports remote allowlist subscriptions. Use the file documented for your platform. For other DNS filters (for example, products that accept only plain domain entries), convert/import the domains using that product's own documented format. Do not paste ABP rules into a plain-domain-only field.
+## Subscription URLs
 
-## Subscribe with AdGuard Home
+Use the matching URL for the matching filter type. **Do not add the allowlist URL as a blocklist or the blocklist URL as an allowlist.**
 
-Add this Raw URL under **Filters → DNS allowlists**:
-
-```text
-https://raw.githubusercontent.com/Huylighting/adguard-custom-allowlist/main/allowlists.txt
-```
-
-1. Open the AdGuard Home web interface.
-2. Go to **Filters → DNS allowlists**.
-3. Choose **Add allowlist**.
-4. Name it `Huylighting Custom Allowlist`.
-5. Paste the Raw URL and save.
-6. Refresh/update the filter lists if needed.
-
-## Subscribe with Pi-hole
-
-Pi-hole v6 added support for subscribing to external allowlists and supports the ABP-style `@@||example.com^` allow rules used in this repository. Use the **same Raw URL** as AdGuard Home and add it as a **subscribed allowlist** in Pi-hole:
+### Allowlist
 
 ```text
-https://raw.githubusercontent.com/Huylighting/adguard-custom-allowlist/main/allowlists.txt
+https://raw.githubusercontent.com/Huylighting/huylighting-custom-allowlist/main/allowlists.txt
 ```
 
-Then update/reload the subscribed lists (Gravity). Make sure the source is configured as an **allowlist**, not a blocklist. Pi-hole v5 does not support external allowlist subscriptions; on older versions, add the required domains manually using Pi-hole's domain allowlist.
+- AdGuard Home: **Filters → DNS allowlists → Add allowlist**
+- Pi-hole v6+: add as a subscribed allowlist only if your installed version supports the rule format.
+- Other products: use only if they support ABP-style network filter rules.
 
-See the official [Pi-hole Domain Database documentation](https://docs.pi-hole.net/database/domain-database/) for subscription and syntax details.
+### Blocklist
 
-## Current entries
+```text
+https://raw.githubusercontent.com/Huylighting/huylighting-custom-allowlist/main/blocklists.txt
+```
 
-| Domain | Service | Purpose |
+- AdGuard Home: **Filters → DNS blocklists → Add blocklist**
+- Pi-hole v6+: add as a subscribed blocklist only if your installed version supports the rule format.
+- Other products: use only if they support ABP-style network filter rules.
+
+The blocklist currently contains comments only; **there are no active block rules yet**. Add it as a subscription after active rules have been reviewed and published.
+
+## Current allowlist entries
+
+| Domain | Service | Reason |
 | --- | --- | --- |
 | `malighting.com` | MA Lighting | Stage-lighting products and services |
-| `azota.vn` | Azota | Education and learning platform |
+| `azota.vn` | Azota | Education platform |
+| `tienganhcomaiphuong.vn` | Tieng Anh Co Mai Phuong | Education website |
+| `yourhomework.net` | YourHomework | Education website |
 | `console.tailscale.com` | Tailscale | Administration console |
 | `login.tailscale.com` | Tailscale | Login and authentication |
 
-This single ABP-compatible file is the shared source of truth for supported platforms. There is no separate Pi-hole list to keep in sync.
+## Rule formats
 
-## Rule syntax
-
-The compatible ABP-style allow rule is:
+### Allow a domain
 
 ```text
 @@||example.com^
 ```
 
-It allows the domain and its subdomains on platforms that support this syntax. In this repository, lines beginning with `!` are comments.
+Allows the specified domain and its subdomains on platforms that support ABP network-filter syntax.
 
-## Reporting a false positive
+### Block a domain
 
-Before requesting an exception:
+```text
+||example.com^
+```
 
-1. Open the filtering platform's query log.
-2. Reproduce the website or service issue.
-3. Identify the exact domain that was blocked.
-4. Confirm that the domain is genuinely required for the service.
-5. Explain why the block appears to be a false positive.
+Blocks the specified domain and its subdomains on platforms that support ABP network-filter syntax.
 
-Please include the affected service, exact blocked domain, filtering product/list (if known), and a short reason the domain is needed.
+Put comments on their own lines, beginning with `!`. Keep allow and block rules in their respective files.
 
-Do not add broad exceptions when a narrower rule is sufficient. Do not allow advertising, analytics, or tracking domains just to restore an unrelated page element. An allowlist exception reduces filtering for the matching domain and may affect privacy or ad blocking.
+## Compatibility notes
 
-## Maintenance and scope
+- AdGuard Home supports AdGuard-style DNS filtering rules.
+- Pi-hole compatibility depends on the installed version and the subscription/list format it supports. Pi-hole v5 and plain-domain-only import fields may require manual entries or a separately converted domain list.
+- uBlock Origin and other ABP-compatible content blockers can use compatible network-filter rules, but they are not DNS-level filters.
+- This is not a universal plain-domain list. Do not paste ABP rules into a field that accepts only bare domain names.
 
-This is a personally maintained project, not an official list endorsed by AdGuard, Pi-hole, or other filtering vendors. Entries may be added, changed, or removed as services evolve and reports are reviewed.
+Always check the official documentation for the exact product and version before subscribing.
 
-The project focuses on **false-positive fixes for legitimate services**. It is not intended to disable ad blocking globally or to guarantee that every website feature will work.
+## Maintenance policy
 
-Use the list only if you trust the maintainer and have reviewed its contents. Administrators are responsible for deciding whether each exception is appropriate for their network.
+### Allowlist
+- Add only domains verified as necessary for a legitimate service.
+- Prefer the narrowest domain exception that fixes the issue.
+- Do not allow advertising, analytics, or tracking domains merely to restore an unrelated page element.
+- Confirm suspected false positives in the DNS query log before adding an exception.
 
-## Links
+### Blocklist
+- Add only domains with a clear, documented blocking purpose.
+- Verify the domain and check for possible effects on legitimate services before adding it.
+- Avoid broad rules when a narrower rule is sufficient.
+- Review reports of breakage and remove obsolete or incorrect rules.
 
-- **Shared AdGuard / Pi-hole v6 / ABP Raw list:** https://raw.githubusercontent.com/Huylighting/adguard-custom-allowlist/main/allowlists.txt
-- **Repository:** https://github.com/Huylighting/adguard-custom-allowlist
+A rule in either list changes filtering behavior for the matching domain. Review changes before subscribing in a production network.
+
+## Reporting an issue
+
+When reporting a false positive or suggesting a block rule, include:
+1. The affected service or application.
+2. The exact domain.
+3. The filtering product or source list, if known.
+4. The reason the domain should be allowed or blocked.
+
+## Disclaimer
+
+This is a personal project maintained by Huylighting. It is not an official list endorsed by AdGuard, Pi-hole, or other filtering vendors. Rules are provided as-is; administrators are responsible for reviewing them and testing their effects on their own networks.
 
 ---
 
 # Tiếng Việt
 
-Danh sách cho phép (allowlist) này dành cho các website và dịch vụ hợp pháp có thể bị bộ lọc chặn nhầm. Dự án cung cấp các tệp quy tắc phù hợp với nhiều nền tảng lọc DNS và quảng cáo, thay vì giả định rằng mọi nền tảng đều dùng chung một cú pháp.
+Bộ danh sách do Huylighting duy trì, gồm **Allowlist (danh sách cho phép)** và **Blocklist (danh sách chặn)** dành cho lọc DNS và nội dung.
 
-Danh sách do Huylighting duy trì. Mỗi ngoại lệ cần có mục đích rõ ràng và được kiểm tra trước khi thêm vào.
+Hai loại quy tắc được tách thành hai tệp riêng để tránh nhầm lẫn giữa quy tắc cho phép và quy tắc chặn.
 
-## Các định dạng được hỗ trợ
+## Cấu trúc repository
 
-| Tệp | Định dạng | Nền tảng dự kiến |
+| Tệp | Chức năng | Cú pháp |
 | --- | --- | --- |
-| [allowlists.txt](./allowlists.txt) | Cú pháp bộ lọc AdGuard / Adblock Plus (ABP) | AdGuard Home, Pi-hole v6+ (đăng ký allowlist), uBlock Origin và các trình chặn hỗ trợ bộ lọc mạng tương thích ABP |
+| [allowlists.txt](./allowlists.txt) | Cho phép các dịch vụ hợp pháp bị chặn nhầm | `@@||domain.tld^` |
+| [blocklists.txt](./blocklists.txt) | Chặn các tên miền được lựa chọn | `||domain.tld^` |
+| [README.md](./README.md) | Hướng dẫn sử dụng và bảo trì | — |
 
-**Lưu ý về khả năng tương thích:** Không phải trình chặn quảng cáo nào cũng dùng cùng định dạng quy tắc hoặc hỗ trợ đăng ký danh sách từ xa. Hãy sử dụng đúng tệp được hướng dẫn cho nền tảng của bạn. Với các bộ lọc DNS khác chỉ chấp nhận tên miền thuần, hãy chuyển đổi hoặc nhập tên miền theo định dạng được tài liệu chính thức của sản phẩm đó hướng dẫn. Không dán quy tắc ABP vào trường chỉ chấp nhận tên miền thuần.
+## Địa chỉ đăng ký
 
-## Đăng ký danh sách trên AdGuard Home
+Phải dùng đúng URL theo loại bộ lọc. **Không thêm Allowlist vào mục Blocklist hoặc ngược lại.**
 
-Thêm Raw URL sau trong mục **Filters → DNS allowlists**:
-
-```text
-https://raw.githubusercontent.com/Huylighting/adguard-custom-allowlist/main/allowlists.txt
-```
-
-1. Mở giao diện quản trị AdGuard Home.
-2. Truy cập **Filters → DNS allowlists**.
-3. Chọn **Add allowlist**.
-4. Đặt tên là `Huylighting Custom Allowlist`.
-5. Dán Raw URL và lưu lại.
-6. Làm mới/cập nhật danh sách bộ lọc nếu cần.
-
-## Đăng ký danh sách trên Pi-hole
-
-Pi-hole phiên bản 6 đã hỗ trợ đăng ký allowlist từ bên ngoài và hỗ trợ cú pháp cho phép kiểu ABP `@@||example.com^` được sử dụng trong repository này. Bạn có thể dùng **chính Raw URL của AdGuard Home** và thêm làm **subscribed allowlist** trong Pi-hole:
+### Allowlist
 
 ```text
-https://raw.githubusercontent.com/Huylighting/adguard-custom-allowlist/main/allowlists.txt
+https://raw.githubusercontent.com/Huylighting/huylighting-custom-allowlist/main/allowlists.txt
 ```
 
-Sau đó cập nhật/tải lại các danh sách đã đăng ký (Gravity). Hãy bảo đảm nguồn được cấu hình là **allowlist**, không phải blocklist. Pi-hole phiên bản 5 không hỗ trợ đăng ký allowlist từ xa; với phiên bản cũ hơn, bạn cần thêm thủ công các tên miền cần thiết trong mục allowlist tên miền của Pi-hole.
+- AdGuard Home: **Filters → DNS allowlists → Add allowlist**
+- Pi-hole v6+: chỉ đăng ký dưới dạng subscribed allowlist nếu phiên bản đang dùng hỗ trợ cú pháp này.
+- Nền tảng khác: chỉ sử dụng nếu hỗ trợ quy tắc mạng kiểu ABP.
 
-Tham khảo tài liệu chính thức [Pi-hole Domain Database](https://docs.pi-hole.net/database/domain-database/) để biết thêm về đăng ký danh sách và cú pháp.
+### Blocklist
 
-## Các mục hiện có
+```text
+https://raw.githubusercontent.com/Huylighting/huylighting-custom-allowlist/main/blocklists.txt
+```
 
-| Tên miền | Dịch vụ | Mục đích |
+- AdGuard Home: **Filters → DNS blocklists → Add blocklist**
+- Pi-hole v6+: chỉ đăng ký dưới dạng subscribed blocklist nếu phiên bản đang dùng hỗ trợ cú pháp này.
+- Nền tảng khác: chỉ sử dụng nếu hỗ trợ quy tắc mạng kiểu ABP.
+
+Hiện tại `blocklists.txt` mới có phần tiêu đề và chú thích, **chưa có quy tắc chặn đang hoạt động**. Chỉ nên đăng ký sau khi đã bổ sung và kiểm tra các quy tắc thực tế.
+
+## Các tên miền hiện được cho phép
+
+| Tên miền | Dịch vụ | Lý do |
 | --- | --- | --- |
 | `malighting.com` | MA Lighting | Sản phẩm và dịch vụ chiếu sáng sân khấu |
-| `azota.vn` | Azota | Nền tảng giáo dục và học tập |
+| `azota.vn` | Azota | Nền tảng giáo dục |
+| `tienganhcomaiphuong.vn` | Tiếng Anh Cô Mai Phương | Website giáo dục |
+| `yourhomework.net` | YourHomework | Website học tập |
 | `console.tailscale.com` | Tailscale | Bảng điều khiển quản trị |
 | `login.tailscale.com` | Tailscale | Đăng nhập và xác thực |
 
-Chỉ duy trì một tệp ABP tương thích làm nguồn dữ liệu chung cho các nền tảng được hỗ trợ, tránh phải cập nhật hai danh sách giống nhau.
-
 ## Cú pháp quy tắc
 
-Ví dụ quy tắc cho phép kiểu ABP tương thích:
+Cho phép tên miền:
 
 ```text
 @@||example.com^
 ```
 
-Trên các nền tảng hỗ trợ cú pháp này, quy tắc sẽ cho phép tên miền được chỉ định và các tên miền phụ của nó. Trong repository này, các dòng bắt đầu bằng ký tự `!` là chú thích.
+Chặn tên miền:
 
-## Báo cáo trường hợp bị chặn nhầm
+```text
+||example.com^
+```
 
-Trước khi đề xuất thêm một ngoại lệ:
+Trên nền tảng hỗ trợ cú pháp ABP, các quy tắc trên áp dụng cho tên miền được chỉ định và các tên miền phụ. Chú thích phải nằm riêng trên từng dòng và bắt đầu bằng ký tự `!`.
 
-1. Mở nhật ký truy vấn (Query Log) của nền tảng lọc DNS.
-2. Thử truy cập lại website hoặc dịch vụ đang gặp lỗi.
-3. Xác định chính xác tên miền bị chặn.
-4. Kiểm tra xem tên miền đó có thực sự cần thiết cho dịch vụ hay không.
-5. Giải thích vì sao đây có thể là trường hợp bị chặn nhầm.
+## Lưu ý tương thích
 
-Khi gửi báo cáo, vui lòng cung cấp tên dịch vụ bị ảnh hưởng, tên miền chính xác, sản phẩm/danh sách bộ lọc gây chặn (nếu biết) và lý do ngắn gọn vì sao cần cho phép tên miền đó.
+- AdGuard Home hỗ trợ quy tắc lọc DNS theo cú pháp AdGuard.
+- Khả năng tương thích với Pi-hole phụ thuộc phiên bản và định dạng danh sách được hỗ trợ. Pi-hole v5 hoặc trường nhập chỉ nhận tên miền thuần có thể cần nhập thủ công hoặc chuyển đổi sang định dạng riêng.
+- uBlock Origin và các trình chặn tương thích ABP có thể sử dụng quy tắc tương ứng, nhưng đây không phải bộ lọc ở cấp DNS.
+- Đây không phải danh sách tên miền thuần dùng được cho mọi sản phẩm. Không dán quy tắc ABP vào trường chỉ nhận tên miền.
 
-Không thêm ngoại lệ quá rộng nếu có thể sử dụng quy tắc hẹp hơn. Không cho phép các tên miền quảng cáo, phân tích hoặc theo dõi chỉ để khôi phục một thành phần không liên quan của trang web. Ngoại lệ allowlist sẽ giảm mức lọc đối với tên miền tương ứng và có thể ảnh hưởng đến quyền riêng tư hoặc khả năng chặn quảng cáo.
+Hãy kiểm tra tài liệu chính thức của đúng sản phẩm và phiên bản trước khi đăng ký.
 
-## Bảo trì và phạm vi dự án
+## Nguyên tắc bảo trì
 
-Đây là dự án cá nhân do Huylighting duy trì, không phải danh sách chính thức được AdGuard, Pi-hole hay nhà cung cấp bộ lọc khác chứng nhận. Các mục có thể được thêm, chỉnh sửa hoặc xóa khi dịch vụ thay đổi và báo cáo được xem xét.
+### Allowlist
+- Chỉ thêm tên miền đã xác minh là cần thiết cho dịch vụ hợp pháp.
+- Ưu tiên ngoại lệ hẹp nhất đủ để khắc phục lỗi.
+- Không cho phép tên miền quảng cáo, phân tích hoặc theo dõi chỉ để khôi phục một thành phần không liên quan.
+- Kiểm tra Query Log trước khi thêm ngoại lệ.
 
-Dự án tập trung xử lý **các trường hợp chặn nhầm dịch vụ hợp pháp**. Mục tiêu không phải tắt toàn bộ khả năng chặn quảng cáo và cũng không bảo đảm mọi chức năng của tất cả website đều hoạt động.
+### Blocklist
+- Chỉ thêm tên miền có mục đích chặn rõ ràng và được ghi chú.
+- Xác minh tên miền và đánh giá ảnh hưởng đến dịch vụ hợp pháp trước khi thêm.
+- Tránh quy tắc quá rộng nếu có thể dùng quy tắc hẹp hơn.
+- Xem xét báo cáo lỗi và loại bỏ quy tắc không còn phù hợp.
 
-Chỉ sử dụng danh sách nếu bạn tin tưởng người duy trì và đã xem xét nội dung. Quản trị viên chịu trách nhiệm quyết định từng ngoại lệ có phù hợp với mạng của mình hay không.
+Mỗi quy tắc đều làm thay đổi hành vi lọc đối với tên miền tương ứng. Hãy kiểm tra thay đổi trước khi sử dụng trên mạng đang hoạt động.
 
-## Liên kết
+## Báo cáo và đề xuất
 
-- **Raw URL dùng chung cho AdGuard Home / Pi-hole v6 / ABP:** https://raw.githubusercontent.com/Huylighting/adguard-custom-allowlist/main/allowlists.txt
-- **Repository:** https://github.com/Huylighting/adguard-custom-allowlist
+Khi báo cáo trường hợp bị chặn nhầm hoặc đề xuất chặn, vui lòng cung cấp:
+1. Dịch vụ hoặc ứng dụng bị ảnh hưởng.
+2. Tên miền chính xác.
+3. Sản phẩm hoặc bộ lọc gây ra vấn đề (nếu biết).
+4. Lý do cần cho phép hoặc chặn tên miền đó.
+
+## Tuyên bố
+
+Đây là dự án cá nhân do Huylighting duy trì, không phải danh sách chính thức được AdGuard, Pi-hole hay nhà cung cấp bộ lọc khác chứng nhận. Các quy tắc được cung cấp theo hiện trạng; quản trị viên cần tự xem xét và kiểm tra ảnh hưởng trước khi sử dụng.
