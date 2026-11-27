@@ -20,6 +20,12 @@
 ! Azota - Education
 @@||azota.vn^
 
+! Tieng Anh Co Mai Phuong - Education
+@@||tienganhcomaiphuong.vn^
+
+! YourHomework - Education
+@@||yourhomework.net^
+
 ! Tailscale - Console and Authentication
 @@||console.tailscale.com^
 @@||login.tailscale.com^
