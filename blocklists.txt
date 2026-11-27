@@ -1,5 +1,5 @@
 ! ==================================================
-! Huylighting Custom Blocklist
+! Huylighting Custom DNS Lists - Blocklist
 ! ABP-Compatible DNS / Content Blocker Rules
 !
 ! Syntax:
@@ -8,7 +8,9 @@
 !
 ! Compatible with AdGuard Home and other filters that
 ! support ABP network-filter syntax.
-!
-! No active blocking rules have been added yet.
-! Add only verified domains with a clear blocking purpose.
 ! ==================================================
+
+! Spotify - advertising endpoint
+! Added from the user's previously configured DNS blocking policy.
+! Keep Spotify image/CDN domains out of this list unless separately verified.
+||aet.spotify.com^
