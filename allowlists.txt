@@ -8,3 +8,7 @@
 
 ! Azota - Education
 @@||azota.vn^
+
+! Tailscale - Console and Authentication
+@@||console.tailscale.com^
+@@||login.tailscale.com^
