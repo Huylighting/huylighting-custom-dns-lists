@@ -8,8 +8,7 @@ The list is maintained by Huylighting. Every exception should have a clear purpo
 
 | File | Format | Intended platforms |
 | --- | --- | --- |
-| [allowlists.txt](./allowlists.txt) | AdGuard / Adblock Plus (ABP) filter syntax | AdGuard Home, AdGuard DNS filtering, uBlock Origin and other blockers that accept compatible ABP network filters |
-| [pihole-allowlist.txt](./pihole-allowlist.txt) | Pi-hole subscribed allowlist using supported ABP-style allow rules | Pi-hole v6 and later |
+| [allowlists.txt](./allowlists.txt) | AdGuard / Adblock Plus (ABP) filter syntax | AdGuard Home, Pi-hole v6+ subscribed allowlists, uBlock Origin and other blockers that accept compatible ABP network filters |
 
 **Compatibility note:** Not every ad blocker uses the same rule format or supports remote allowlist subscriptions. Use the file documented for your platform. For other DNS filters (for example, products that accept only plain domain entries), convert/import the domains using that product's own documented format. Do not paste ABP rules into a plain-domain-only field.
 
@@ -30,13 +29,13 @@ https://raw.githubusercontent.com/Huylighting/adguard-custom-allowlist/main/allo
 
 ## Subscribe with Pi-hole
 
-Pi-hole v6 added support for subscribing to external allowlists. Add this Raw URL as a **subscribed allowlist** in Pi-hole:
+Pi-hole v6 added support for subscribing to external allowlists and supports the ABP-style `@@||example.com^` allow rules used in this repository. Use the **same Raw URL** as AdGuard Home and add it as a **subscribed allowlist** in Pi-hole:
 
 ```text
-https://raw.githubusercontent.com/Huylighting/adguard-custom-allowlist/main/pihole-allowlist.txt
+https://raw.githubusercontent.com/Huylighting/adguard-custom-allowlist/main/allowlists.txt
 ```
 
-Then update/reload the subscribed lists (Gravity). Make sure the source is configured as an **allowlist**, not a blocklist. Pi-hole's parser supports the ABP-style `@@||example.com^` syntax in subscribed allowlists. Pi-hole v5 does not support external allowlist subscriptions; on older versions, add the required domains manually using Pi-hole's domain allowlist.
+Then update/reload the subscribed lists (Gravity). Make sure the source is configured as an **allowlist**, not a blocklist. Pi-hole v5 does not support external allowlist subscriptions; on older versions, add the required domains manually using Pi-hole's domain allowlist.
 
 See the official [Pi-hole Domain Database documentation](https://docs.pi-hole.net/database/domain-database/) for subscription and syntax details.
 
@@ -49,7 +48,7 @@ See the official [Pi-hole Domain Database documentation](https://docs.pi-hole.ne
 | `console.tailscale.com` | Tailscale | Administration console |
 | `login.tailscale.com` | Tailscale | Login and authentication |
 
-The AdGuard/ABP rules and Pi-hole subscription rules are maintained separately so each platform has a clearly named source file.
+This single ABP-compatible file is the shared source of truth for supported platforms. There is no separate Pi-hole list to keep in sync.
 
 ## Rule syntax
 
@@ -85,8 +84,7 @@ Use the list only if you trust the maintainer and have reviewed its contents. Ad
 
 ## Links
 
-- **AdGuard / ABP Raw list:** https://raw.githubusercontent.com/Huylighting/adguard-custom-allowlist/main/allowlists.txt
-- **Pi-hole v6 Raw list:** https://raw.githubusercontent.com/Huylighting/adguard-custom-allowlist/main/pihole-allowlist.txt
+- **Shared AdGuard / Pi-hole v6 / ABP Raw list:** https://raw.githubusercontent.com/Huylighting/adguard-custom-allowlist/main/allowlists.txt
 - **Repository:** https://github.com/Huylighting/adguard-custom-allowlist
 
 ---
@@ -101,8 +99,7 @@ Danh sách do Huylighting duy trì. Mỗi ngoại lệ cần có mục đích r�
 
 | Tệp | Định dạng | Nền tảng dự kiến |
 | --- | --- | --- |
-| [allowlists.txt](./allowlists.txt) | Cú pháp bộ lọc AdGuard / Adblock Plus (ABP) | AdGuard Home, AdGuard DNS, uBlock Origin và các trình chặn hỗ trợ bộ lọc mạng tương thích ABP |
-| [pihole-allowlist.txt](./pihole-allowlist.txt) | Allowlist đăng ký trong Pi-hole, sử dụng quy tắc cho phép kiểu ABP được hỗ trợ | Pi-hole phiên bản 6 trở lên |
+| [allowlists.txt](./allowlists.txt) | Cú pháp bộ lọc AdGuard / Adblock Plus (ABP) | AdGuard Home, Pi-hole v6+ (đăng ký allowlist), uBlock Origin và các trình chặn hỗ trợ bộ lọc mạng tương thích ABP |
 
 **Lưu ý về khả năng tương thích:** Không phải trình chặn quảng cáo nào cũng dùng cùng định dạng quy tắc hoặc hỗ trợ đăng ký danh sách từ xa. Hãy sử dụng đúng tệp được hướng dẫn cho nền tảng của bạn. Với các bộ lọc DNS khác chỉ chấp nhận tên miền thuần, hãy chuyển đổi hoặc nhập tên miền theo định dạng được tài liệu chính thức của sản phẩm đó hướng dẫn. Không dán quy tắc ABP vào trường chỉ chấp nhận tên miền thuần.
 
@@ -123,15 +120,13 @@ https://raw.githubusercontent.com/Huylighting/adguard-custom-allowlist/main/allo
 
 ## Đăng ký danh sách trên Pi-hole
 
-Pi-hole phiên bản 6 đã hỗ trợ đăng ký allowlist từ bên ngoài. Thêm Raw URL sau làm **subscribed allowlist** trong Pi-hole:
+Pi-hole phiên bản 6 đã hỗ trợ đăng ký allowlist từ bên ngoài và hỗ trợ cú pháp cho phép kiểu ABP `@@||example.com^` được sử dụng trong repository này. Bạn có thể dùng **chính Raw URL của AdGuard Home** và thêm làm **subscribed allowlist** trong Pi-hole:
 
 ```text
-https://raw.githubusercontent.com/Huylighting/adguard-custom-allowlist/main/pihole-allowlist.txt
+https://raw.githubusercontent.com/Huylighting/adguard-custom-allowlist/main/allowlists.txt
 ```
 
-Sau đó cập nhật/tải lại các danh sách đã đăng ký (Gravity). Hãy bảo đảm nguồn được cấu hình là **allowlist**, không phải blocklist. Bộ phân tích của Pi-hole hỗ trợ cú pháp cho phép kiểu ABP `@@||example.com^` trong các allowlist đã đăng ký.
-
-Pi-hole phiên bản 5 không hỗ trợ đăng ký allowlist từ xa. Với phiên bản cũ hơn, bạn cần thêm thủ công các tên miền cần thiết trong mục allowlist tên miền của Pi-hole.
+Sau đó cập nhật/tải lại các danh sách đã đăng ký (Gravity). Hãy bảo đảm nguồn được cấu hình là **allowlist**, không phải blocklist. Pi-hole phiên bản 5 không hỗ trợ đăng ký allowlist từ xa; với phiên bản cũ hơn, bạn cần thêm thủ công các tên miền cần thiết trong mục allowlist tên miền của Pi-hole.
 
 Tham khảo tài liệu chính thức [Pi-hole Domain Database](https://docs.pi-hole.net/database/domain-database/) để biết thêm về đăng ký danh sách và cú pháp.
 
@@ -144,7 +139,7 @@ Tham khảo tài liệu chính thức [Pi-hole Domain Database](https://docs.pi-
 | `console.tailscale.com` | Tailscale | Bảng điều khiển quản trị |
 | `login.tailscale.com` | Tailscale | Đăng nhập và xác thực |
 
-Các quy tắc AdGuard/ABP và quy tắc đăng ký cho Pi-hole được duy trì trong hai tệp riêng biệt, giúp xác định rõ nguồn danh sách dành cho từng nền tảng.
+Chỉ duy trì một tệp ABP tương thích làm nguồn dữ liệu chung cho các nền tảng được hỗ trợ, tránh phải cập nhật hai danh sách giống nhau.
 
 ## Cú pháp quy tắc
 
@@ -180,6 +175,5 @@ Chỉ sử dụng danh sách nếu bạn tin tưởng người duy trì và đã
 
 ## Liên kết
 
-- **Danh sách Raw dành cho AdGuard / ABP:** https://raw.githubusercontent.com/Huylighting/adguard-custom-allowlist/main/allowlists.txt
-- **Danh sách Raw dành cho Pi-hole v6:** https://raw.githubusercontent.com/Huylighting/adguard-custom-allowlist/main/pihole-allowlist.txt
+- **Raw URL dùng chung cho AdGuard Home / Pi-hole v6 / ABP:** https://raw.githubusercontent.com/Huylighting/adguard-custom-allowlist/main/allowlists.txt
 - **Repository:** https://github.com/Huylighting/adguard-custom-allowlist
