@@ -1,5 +1,5 @@
 ! ==================================================
-! Huylighting Custom Allowlist
+! Huylighting Custom DNS Lists - Allowlist
 ! Universal ABP-Compatible DNS / Content Blocker Rules
 !
 ! Compatible with:
