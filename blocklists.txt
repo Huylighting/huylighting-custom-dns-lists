@@ -15,3 +15,36 @@
 ! Added from the user's previously configured DNS blocking policy.
 ! Keep Spotify image/CDN domains out of this list unless separately verified.
 ||aet.spotify.com^
+
+! Advertising / analytics domains from the user's Pi-hole review
+||doubleclick.net^
+||google-analytics.com^
+||ad.doubleclick.net^
+||pagead2.googlesyndication.com^
+||ads.spotify.com^
+||adservice.google.com^
+||googletagmanager.com^
+||app-measurement.com^
+||ads.twitter.com^
+||ads.yahoo.com^
+||ads.pubmatic.com^
+||ads.serving-sys.com^
+||media.net^
+||moatads.com^
+||outbrain.com^
+||taboola.com^
+||googlesyndication.com^
+||googleadservices.com^
+||adsrvr.org^
+||adnxs.com^
+||scorecardresearch.com^
+||criteo.com^
+||zedo.com^
+||smartadserver.com^
+||ads.youtube.com^
+
+! URL paths supplied by the user are not DNS domains and cannot
+! be represented in a DNS blocklist:
+! youtube.com/api/stats/ads
+! youtube.com/ptracking
+! youtube.com/pagead/*
