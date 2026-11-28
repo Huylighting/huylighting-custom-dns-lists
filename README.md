@@ -12,6 +12,16 @@ The project keeps allow and block rules in separate subscription files. This pre
 | [blocklists.txt](./blocklists.txt) | Block selected domains | `||domain.tld^` |
 | [README.md](./README.md) | Usage and maintenance documentation | — |
 
+## Upstream subscription inventory
+
+The repository also records the upstream filter subscriptions currently reported for Pi-hole and AdGuard Home. These are reference catalogs only; **do not add the catalog files themselves as DNS subscriptions**.
+
+- [Pi-hole upstream sources](./upstream-pihole.txt)
+- [AdGuard Home upstream sources](./upstream-adguardhome.txt)
+- [Pi-hole domain entries pending review](./pihole-domain-review.txt)
+
+The domain-review file contains entries copied from the pasted Pi-hole table. Its type selections were not visible, so those entries are intentionally not treated as active allow or block rules. Verify them in Pi-hole before moving any domain into the curated lists.
+
 ## Subscription URLs
 
 Use the matching URL for the matching filter type. **Do not add the allowlist URL as a blocklist or the blocklist URL as an allowlist.**
