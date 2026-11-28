@@ -1,6 +1,7 @@
 ! ==================================================
 ! Huylighting Custom DNS Lists - Blocklist
-! ABP-Compatible DNS / Content Blocker Rules
+! Curated Vietnam + international ABP-compatible rules
+! Add only confirmed domains to avoid breaking services.
 !
 ! Syntax:
 !   ||example.com^       Block domain and its subdomains
