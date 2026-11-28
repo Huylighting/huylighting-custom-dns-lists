@@ -30,3 +30,25 @@
 ! Tailscale - Console and Authentication
 @@||console.tailscale.com^
 @@||login.tailscale.com^
+
+! Google / Android / YouTube service connectivity
+@@||clients4.google.com^
+@@||mtalk.google.com^
+@@||play.googleapis.com^
+@@||youtubei.googleapis.com^
+@@||s.youtube.com^
+
+! Spotify playback and content delivery
+! Keep ad endpoints (ads.spotify.com and aet.spotify.com) blocked.
+@@||audio2.spotify.com^
+@@||spclient.wg.spotify.com^
+@@||spotify.map.fastlylb.net^
+@@||scdn.co^
+@@||spotifycdn.com^
+
+! Facebook / TikTok / app service connectivity
+@@||connect.facebook.net^
+@@||graph.facebook.com^
+@@||facebook.net^
+@@||tiktokcdn.com^
+@@||firebaseinstallations.googleapis.com^
